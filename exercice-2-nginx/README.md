@@ -31,7 +31,7 @@ Vous développez un site web statique avec **Nginx**. Vous voulez modifier vos f
 
 9. Nettoyez
 
-### ❓ Questions
-- Pourquoi n'avez-vous pas eu besoin de redémarrer le conteneur après modification ?
-- Quelle est l'utilité du mode lecture seule ?
-- Quelle est la différence entre un bind mount et un volume ?
+   ### ❓ Questions
+   - Pourquoi n'avez-vous pas eu besoin de redémarrer le conteneur après modification ?
+   - Quelle est l'utilité du mode lecture seule ?
+   - Quelle est la différence entre un bind mount et un volume ?
