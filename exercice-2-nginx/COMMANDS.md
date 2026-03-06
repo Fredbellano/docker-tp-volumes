@@ -37,3 +37,8 @@ docker run -d --name dev-web -p 8080:80 -v "${HOME}\tp-nginx:/usr/share/nginx/ht
 # Tentative de création d’un fichier depuis l’intérieur du conteneur
 
 docker exec dev-web sh -c "echo '<h1>Test</h1>' > /usr/share/nginx/html/test.html"
+
+# Nettoyage final
+
+docker rm -f dev-web
+Remove-Item -Recurse -Force "$HOME\tp-nginx"
