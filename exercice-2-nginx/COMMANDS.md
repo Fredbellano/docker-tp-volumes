@@ -1,7 +1,7 @@
 # Exercice 2
 
-# 1. Création du dossier `tp-nginx` et du fichier `index.html`
-```powershell
+# Création du dossier `tp-nginx` et du fichier `index.html`
+
 mkdir $HOME\tp-nginx
 Set-Content -Path "$HOME\tp-nginx\index.html" -Value "<h1>Version 1.0</h1>"
 
