@@ -1,137 +1,86 @@
-name: Check Dockerfiles
+name: Check TP Volumes
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
-  check-ex1:
-    name: "Exercice 1 - Flask"
+  validate-exercises:
+    name: Validate Exercises Structure
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Check Dockerfile exists
-        run: |
-          if [ ! -f exercice-1-flask/Dockerfile ]; then
-            echo "❌ Dockerfile manquant dans exercice-1-flask/"
-            exit 1
-          fi
-          echo "✅ Dockerfile trouvé"
-      
-      - name: Check .dockerignore exists
-        run: |
-          if [ ! -f exercice-1-flask/.dockerignore ]; then
-            echo "⚠️ .dockerignore manquant (recommandé)"
-          else
-            echo "✅ .dockerignore trouvé"
-          fi
-      
-      - name: Build image
-        run: |
-          cd exercice-1-flask
-          docker build -t hello-flask:test .
-      
-      - name: Check image size
-        run: |
-          SIZE=$(docker images hello-flask:test --format "{{.Size}}")
-          echo "📦 Taille de l'image : $SIZE"
-          
-          # Vérifier que l'image fait moins de 200MB
-          SIZE_MB=$(docker images hello-flask:test --format "{{.Size}}" | sed 's/MB//')
-          if (( $(echo "$SIZE_MB > 200" | bc -l) )); then
-            echo "⚠️ Image > 200MB, peut être optimisée"
-          else
-            echo "✅ Taille acceptable"
-          fi
-      
-      - name: Test container
-        run: |
-          docker run -d -p 5000:5000 --name test-flask hello-flask:test
-          sleep 3
-          
-          # Tester l'endpoint
-          RESPONSE=$(curl -s http://localhost:5000)
-          if [[ $RESPONSE == *"Hello Docker"* ]]; then
-            echo "✅ Application fonctionne"
-          else
-            echo "❌ Application ne répond pas correctement"
-            exit 1
-          fi
-          
-          docker stop test-flask
 
-  check-ex2:
-    name: "Exercice 2 - Weather API"
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Build image
-        run: |
-          cd exercice-2-weather-api
-          docker build -t weather-api:test .
-      
-      - name: Check image uses Alpine
-        run: |
-          # Vérifier si l'image de base est alpine
-          FROM_LINE=$(grep "^FROM" exercice-2-weather-api/Dockerfile)
-          if [[ $FROM_LINE == *"alpine"* ]]; then
-            echo "✅ Utilise une image Alpine"
-          else
-            echo "⚠️ N'utilise pas Alpine (image plus lourde)"
-          fi
-      
-      - name: Test API
-        run: |
-          docker run -d -p 3000:3000 --name test-weather weather-api:test
-          sleep 3
-          
-          RESPONSE=$(curl -s http://localhost:3000/api/weather/paris)
-          if [[ $RESPONSE == *"nuageux"* ]]; then
-            echo "✅ API fonctionne"
-          else
-            echo "❌ API ne répond pas correctement"
-            exit 1
-          fi
-          
-          docker stop test-weather
+      - name: Checkout
+        uses: actions/checkout@v4
 
-  check-ex3:
-    name: "Exercice 3 - Stats API"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Build image
+      - name: Validate required files and content
+        shell: bash
         run: |
-          cd exercice-3-stats-api
-          docker build -t stats-api:test .
-      
-      - name: Check multistage build
-        run: |
-          # Compter le nombre de FROM dans le Dockerfile
-          FROM_COUNT=$(grep -c "^FROM" exercice-3-stats-api/Dockerfile)
-          if [ $FROM_COUNT -ge 2 ]; then
-            echo "✅ Multistage build détecté"
-          else
-            echo "⚠️ Pas de multistage build (exercice 3 le demande)"
-          fi
-      
-      - name: Test API
-        run: |
-          docker run -d -p 8080:8080 --name test-stats stats-api:test
-          sleep 3
-          
-          RESPONSE=$(curl -s -X POST http://localhost:8080/api/stats/median \
-            -H "Content-Type: application/json" \
-            -d '{"numbers": [10, 20, 30, 40, 50]}')
-          
-          if [[ $RESPONSE == *"median"* ]]; then
-            echo "✅ Nouvelle fonctionnalité médiane fonctionne"
-          else
-            echo "❌ Route /api/stats/median ne fonctionne pas"
+          set -euo pipefail
+
+          EXERCISES=(
+            "exercice-1-logger"
+            "exercice-2-nginx"
+          )
+
+          FAIL=0
+
+          for EX in "${EXERCISES[@]}"; do
+            echo "==> Checking ${EX}"
+
+            if [ ! -d "$EX" ]; then
+              echo "❌ Dossier manquant: $EX"
+              FAIL=1
+              continue
+            fi
+
+            if [ ! -f "$EX/README.md" ]; then
+              echo "❌ README.md manquant dans $EX"
+              FAIL=1
+            fi
+
+            if [ ! -f "$EX/COMMANDS.md" ]; then
+              echo "❌ COMMANDS.md manquant dans $EX"
+              FAIL=1
+            fi
+
+            if [ -f "$EX/Dockerfile" ]; then
+              echo "⚠️ Dockerfile present dans $EX (non requis pour ce TP)"
+            fi
+
+            if [ -f "$EX/README.md" ]; then
+              if ! grep -q "[A-Za-z0-9]" "$EX/README.md"; then
+                echo "❌ README.md vide dans $EX"
+                FAIL=1
+              fi
+
+              if grep -Eq '^```(bash|sh)|\bdocker\b' "$EX/README.md"; then
+                echo "❌ README.md contient des commandes dans $EX (elles doivent etre dans COMMANDS.md)"
+                FAIL=1
+              fi
+            fi
+
+            if [ -f "$EX/COMMANDS.md" ]; then
+              if ! grep -q "[A-Za-z0-9]" "$EX/COMMANDS.md"; then
+                echo "❌ COMMANDS.md vide dans $EX"
+                FAIL=1
+              fi
+
+              if ! grep -Eq '\bdocker\b' "$EX/COMMANDS.md"; then
+                echo "❌ COMMANDS.md ne contient aucune commande Docker dans $EX"
+                FAIL=1
+              fi
+            fi
+          done
+
+          if [ "$FAIL" -ne 0 ]; then
+            echo ""
+            echo "❌ Validation echouee"
             exit 1
           fi
-          
-          docker stop test-stats
+
+          echo ""
+          echo "✅ Validation terminee avec succes"
