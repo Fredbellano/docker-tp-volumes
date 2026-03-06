@@ -33,5 +33,10 @@ Vous développez un site web statique avec **Nginx**. Vous voulez modifier vos f
 
 ### ❓ Questions
 - Pourquoi n'avez-vous pas eu besoin de redémarrer le conteneur après modification ?
+   Parce que le bind mount relie directement le dossier de ma machine au conteneur, donc les modifications sont visibles immédiatement
+
 - Quelle est l'utilité du mode lecture seule ?
+   Il empêche le conteneur de modifier les fichiers montés
+
 - Quelle est la différence entre un bind mount et un volume ?
+   Un bind mount utilise un dossier de la machine alors qu’un volume est géré par Docker
