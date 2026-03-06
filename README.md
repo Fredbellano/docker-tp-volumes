@@ -1,37 +1,53 @@
-# TP — Volumes & Persistance Docker
+# TP Docker - Gestion des volumes
 
-## Prérequis
-- Docker installé et fonctionnel
-- Connaissances de base : `docker run`, `docker rm`, `docker ps`
+Le but est de vous faire pratiquer, pas a pas, la persistance des donnees avec Docker via les volumes et les bind mounts.
 
----
+## Objectifs pedagogiques
 
+A la fin du TP, vous devez etre capable de:
+- creer et utiliser un volume nomme
+- comprendre la persistance des donnees au-dela du cycle de vie d'un conteneur
+- partager des donnees entre plusieurs conteneurs
+- utiliser un bind mount pour le developpement local
+- utiliser le mode lecture seule (`:ro`) sur un montage
+- choisir entre volume et bind mount selon le contexte
 
----
+## Organisation du TP
 
-## Exercice 3 — La surprise du VOLUME
+Le TP est compose de 2 exercices progressifs:
 
-### 📋 Contexte
-Vous devez construire une image qui prépare un dossier avec des fichiers, puis déclare ce dossier comme volume.
+1. `exercice-1-logger`
+- Journalisation persistante partagee entre conteneurs
+- Focus: volume nomme, ecriture/lecture multi-conteneurs, persistance apres suppression
 
-### 🎯 Objectif
-Comprendre ce qu'il reste dans le dossier après avoir lancé le conteneur.
+2. `exercice-2-nginx`
+- Site statique Nginx avec edition en live depuis l'hote
+- Focus: bind mount, feedback temps reel, mode lecture seule
 
-### 📝 Consignes
+## Ce que vous devez rendre
 
-Créez un fichier `Dockerfile` avec les instructions suivantes, **dans cet ordre exact** :
+Dans chaque dossier d'exercice, vous devez fournir:
+- `README.md` (consigne / contexte / criteres, sans commandes)
+- `Dockerfile`
+- `COMMANDS.md` (toutes les commandes executees pour realiser l'exercice)
 
-1. Partez de l'image `alpine`
-2. Créez le dossier `/data`
-3. Ajoutez-y les fichiers `fichier1.txt` et `fichier2.txt`
-4. Déclarez `/data` comme **volume**
-5. Ajoutez ensuite les fichiers `fichier3.txt` et `fichier4.txt` dans le même dossier
+Le format attendu est precise dans [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-Construisez l'image, lancez un conteneur, puis affichez le contenu de `/data`.
+## Methode de travail conseillee
 
-### ❓ Questions
+- Lire d'abord la consigne de l'exercice.
+- Realiser un premier montage qui fonctionne.
+- Verifier le comportement (partage, persistance, lecture seule).
+- Tester les cas de suppression/recreation de conteneur.
+- Documenter vos commandes dans `COMMANDS.md`.
 
-1. Quels fichiers voyez-vous dans `/data` ?
-2. Pourquoi `fichier3.txt` et `fichier4.txt` ne sont pas présents ?
-3. Que se passe-t-il si vous lancez le conteneur **sans** monter de volume avec `-v` ?
-4. Quel est l'intérêt de l'instruction `VOLUME` dans un Dockerfile ?
+## Evaluation
+
+Vous serez evalues sur:
+- la conformite a la consigne
+- la bonne utilisation des volumes et bind mounts
+- la capacite a demonstrer la persistance des donnees
+- la maitrise des options de montage (dont `:ro`)
+- la clarte du rendu
+
+Bon TP.
