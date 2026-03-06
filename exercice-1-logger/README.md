@@ -31,4 +31,7 @@ Vous développez un système de journalisation. Chaque conteneur écrit des logs
 
 ### ❓ Questions
 - Que se passe-t-il si vous supprimez les conteneurs sans supprimer le volume ?
+   Les conteneurs sont supprimés mais les données restent dans le volume. Le volume est indépendant des conteneurs.
+
 - Comment plusieurs conteneurs peuvent-ils partager les mêmes données ?
+   Ils montent le même volume Docker dans leur conteneur, ce qui leur permet d’accéder aux mêmes fichiers.
