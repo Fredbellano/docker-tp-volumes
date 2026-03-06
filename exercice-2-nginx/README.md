@@ -33,5 +33,9 @@ Vous développez un site web statique avec **Nginx**. Vous voulez modifier vos f
 
 ### ❓ Questions
 - Pourquoi n'avez-vous pas eu besoin de redémarrer le conteneur après modification ?
+parce qu'on utilise le bind mount 
 - Quelle est l'utilité du mode lecture seule ?
+Empêcher de modifier les fichiers du conteneur
 - Quelle est la différence entre un bind mount et un volume ?
+Bind mount lie directement dossier et fichier de l'hôte
+Le volume doit avoir un endroit à part sur l'hôte de manière plus isolé
