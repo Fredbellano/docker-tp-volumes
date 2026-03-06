@@ -28,7 +28,6 @@ Le TP est compose de 2 exercices progressifs:
 
 Dans chaque dossier d'exercice, vous devez fournir:
 - `README.md` (consigne / contexte / criteres, sans commandes)
-- `Dockerfile`
 - `COMMANDS.md` (toutes les commandes executees pour realiser l'exercice)
 
 Le format attendu est precise dans [CONTRIBUTING.md](./CONTRIBUTING.md).

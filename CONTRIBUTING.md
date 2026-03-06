@@ -24,8 +24,10 @@ Pour chaque exercice, créez les fichiers demandés.
 
 Pour chaque dossier d'exercice, le rendu doit contenir:
 
-- un `Dockerfile` qui répond a la consigne
+- un `README.md` (consigne / contexte / criteres, sans commandes)
 - un fichier de commandes separe au format Markdown: `COMMANDS.md`
+
+Pour ce TP volumes, **aucun `Dockerfile` n'est requis**.
 
 Regle importante:
 
@@ -38,6 +40,5 @@ Structure attendue (exemple):
 ```text
 exercice-x/
   README.md
-  Dockerfile
   COMMANDS.md
 ```
