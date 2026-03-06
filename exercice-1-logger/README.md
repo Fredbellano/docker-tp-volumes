@@ -11,21 +11,21 @@ Vous développez un système de journalisation. Chaque conteneur écrit des logs
 
 ### 📝 Consignes
 
-1. Créez un volume Docker nommé `logs_volume`
+1. Créez un volume Docker nommé `logs_volume` FAIT
 
 2. Lancez un conteneur `alpine` nommé `logger1` qui :
-   - Monte le volume sur `/var/logs`
-   - Écrit une ligne de log dans `/var/logs/app.log`
+   - Monte le volume sur `/var/logs` FAIT
+   - Écrit une ligne de log dans `/var/logs/app.log` FAIT
 
 3. Lancez un deuxième conteneur `alpine` nommé `logger2` qui :
-   - Monte le **même** volume
-   - Ajoute une autre ligne dans le **même** fichier
+   - Monte le **même** volume FAIT
+   - Ajoute une autre ligne dans le **même** fichier FAIT
 
-4. Lancez un troisième conteneur éphémère qui affiche le contenu du fichier
+4. Lancez un troisième conteneur éphémère qui affiche le contenu du fichier FAIT
 
-5. Supprimez les conteneurs `logger1` et `logger2`
+5. Supprimez les conteneurs `logger1` et `logger2` FAIT 
 
-6. Vérifiez que le volume existe toujours et que les données sont intactes
+6. Vérifiez que le volume existe toujours et que les données sont intactes FAIT
 
 7. Nettoyez en supprimant le volume
 

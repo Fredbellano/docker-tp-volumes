@@ -11,7 +11,7 @@ Vous développez un site web statique avec **Nginx**. Vous voulez modifier vos f
 
 ### 📝 Consignes
 
-1. Créez un dossier `~/tp-nginx` avec un fichier `index.html` contenant un titre "Version 1.0"
+1. Créez un dossier `~/tp-nginx` avec un fichier `index.html` contenant un titre "Version 1.0" FAIT
 
 2. Lancez un conteneur Nginx nommé `dev-web` qui :
    - Monte votre dossier sur `/usr/share/nginx/html`
@@ -32,6 +32,6 @@ Vous développez un site web statique avec **Nginx**. Vous voulez modifier vos f
 9. Nettoyez
 
 ### ❓ Questions
-- Pourquoi n'avez-vous pas eu besoin de redémarrer le conteneur après modification ?
-- Quelle est l'utilité du mode lecture seule ?
-- Quelle est la différence entre un bind mount et un volume ?
+- Pourquoi n'avez-vous pas eu besoin de redémarrer le conteneur après modification ? car c'est lié directement au html
+- Quelle est l'utilité du mode lecture seule ? empeche les modification depuis le conteneur 
+- Quelle est la différence entre un bind mount et un volume ? lien vers un dossier ou fichier existant, et volume lié au conteneur Docker
