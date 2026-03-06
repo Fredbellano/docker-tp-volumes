@@ -23,12 +23,27 @@ Vous développez un système de journalisation. Chaque conteneur écrit des logs
 
 4. Lancez un troisième conteneur éphémère qui affiche le contenu du fichier
 
+docker container run --rm -v logs_volume:/var/logs alpine cat /var/logs/app.log
+
 5. Supprimez les conteneurs `logger1` et `logger2`
+
+docker container rm logger1 logger2
 
 6. Vérifiez que le volume existe toujours et que les données sont intactes
 
+docker volume ls
+docker volume inspect logs_volume
+docker container run --rm -v logs_volume:/var/logs alpine cat /var/logs/app.log
+
 7. Nettoyez en supprimant le volume
+docker volume rm logs_volume
+
 
 ### ❓ Questions
 - Que se passe-t-il si vous supprimez les conteneurs sans supprimer le volume ?
+
+le volume et les données restent sur la machine 
+
 - Comment plusieurs conteneurs peuvent-ils partager les mêmes données ?
+
+ils ont le même volume
