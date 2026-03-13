@@ -30,5 +30,5 @@ Vous développez un système de journalisation. Chaque conteneur écrit des logs
 7. Nettoyez en supprimant le volume
 
 ### ❓ Questions
-- Que se passe-t-il si vous supprimez les conteneurs sans supprimer le volume ?
-- Comment plusieurs conteneurs peuvent-ils partager les mêmes données ?
+- Que se passe-t-il si vous supprimez les conteneurs sans supprimer le volume ? Les données restent stockées quand même
+- Comment plusieurs conteneurs peuvent-ils partager les mêmes données ? S'ils ont le même volume ils peuvent partager leurs données

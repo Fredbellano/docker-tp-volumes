@@ -32,6 +32,6 @@ Vous développez un site web statique avec **Nginx**. Vous voulez modifier vos f
 9. Nettoyez
 
 ### ❓ Questions
-- Pourquoi n'avez-vous pas eu besoin de redémarrer le conteneur après modification ?
-- Quelle est l'utilité du mode lecture seule ?
-- Quelle est la différence entre un bind mount et un volume ?
+- Pourquoi n'avez-vous pas eu besoin de redémarrer le conteneur après modification ? Comme le dossier est sur notre machine il a pas besoin de se recharger et les infos sont trasmises directement
+- Quelle est l'utilité du mode lecture seule ? Eviter que par exemple si quelqu'un accède au conteneur il puisse écrire dedans
+- Quelle est la différence entre un bind mount et un volume ? Un bind mount alloue un espace de la machine que les conteneurs peuvent utiliser alors qu'un volume est un espace créer pour que les conteneurs le gère eux même
